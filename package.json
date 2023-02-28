@@ -1,5 +1,5 @@
 {
-  "name": "my-store-app",
+  "name": "rud-nuts-store",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -31,13 +31,15 @@
     "@mui/material": "^5.8.7",
     "@mui/styles": "^5.8.7",
     "@types/yup": "^0.29.14",
+    "aws-cdk-lib": "^2.65.0",
     "axios": "^0.27.2",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.1",
     "react-router-dom": "^6.3.0",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "serverless-single-page-app-plugin": "file:./serverless_plugins"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
