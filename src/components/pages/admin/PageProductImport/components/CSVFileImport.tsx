@@ -1,6 +1,8 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import axios from "axios";
+import { UseModalCredential } from "~/hooks/UseModalCredential";
 
 type CSVFileImportProps = {
   url: string;
@@ -9,6 +11,7 @@ type CSVFileImportProps = {
 
 export default function CSVFileImport({ url, title }: CSVFileImportProps) {
   const [file, setFile] = React.useState<File>();
+  const { toggle } = UseModalCredential();
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -23,24 +26,35 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
   };
 
   const uploadFile = async () => {
-    console.log("uploadFile to", url);
+    if (file && file.name) {
+      console.log("uploadFile to", url);
+      const authorizationToken = localStorage.getItem("authorization_token");
 
-    // Get the presigned URL
-    // const response = await axios({
-    //   method: "GET",
-    //   url,
-    //   params: {
-    //     name: encodeURIComponent(file.name),
-    //   },
-    // });
-    // console.log("File to upload: ", file.name);
-    // console.log("Uploading to: ", response.data);
-    // const result = await fetch(response.data, {
-    //   method: "PUT",
-    //   body: file,
-    // });
-    // console.log("Result: ", result);
-    // setFile("");
+      // Get the presigned URL
+      try {
+        const response = await axios({
+          method: "GET",
+          url,
+          headers: authorizationToken
+            ? { Authorization: `Basic ${authorizationToken}` }
+            : {},
+          params: {
+            name: encodeURIComponent(file.name),
+          },
+        });
+        console.log("File to upload: ", file.name);
+        console.log("Uploading to: ", response.data);
+        const result = await fetch(response.data.fileUrl, {
+          method: "PUT",
+          body: file,
+        });
+        console.log("Result: ", result);
+        removeFile();
+      } catch (error) {
+        console.log(error.request.status, "error");
+        toggle(true);
+      }
+    }
   };
   return (
     <Box>
