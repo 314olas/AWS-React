@@ -32,41 +32,43 @@ export default function ProductsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data ? data.map((product) => (
-            <TableRow key={product.id}>
-              <TableCell component="th" scope="row">
-                {product.title}
-              </TableCell>
-              <TableCell align="right">{product.description}</TableCell>
-              <TableCell align="right">
-                {formatAsPrice(product.price)}
-              </TableCell>
-              <TableCell align="right">{product.count}</TableCell>
-              <TableCell align="right">
-                <Button
-                  size="small"
-                  color="primary"
-                  component={Link}
-                  to={`/admin/product-form/${product.id}`}
-                >
-                  Manage
-                </Button>
-                <Button
-                  size="small"
-                  color="secondary"
-                  onClick={() => {
-                    if (product.id) {
-                      deleteAvailableProduct(product.id, {
-                        onSuccess: invalidateAvailableProducts,
-                      });
-                    }
-                  }}
-                >
-                  Delete
-                </Button>
-              </TableCell>
-            </TableRow>
-          )) : null}
+          {data
+            ? data.map((product) => (
+                <TableRow key={product.id}>
+                  <TableCell component="th" scope="row">
+                    {product.title}
+                  </TableCell>
+                  <TableCell align="right">{product.description}</TableCell>
+                  <TableCell align="right">
+                    {formatAsPrice(product.price)}
+                  </TableCell>
+                  <TableCell align="right">{product.count}</TableCell>
+                  <TableCell align="right">
+                    <Button
+                      size="small"
+                      color="primary"
+                      component={Link}
+                      to={`/admin/product-form/${product.id}`}
+                    >
+                      Manage
+                    </Button>
+                    <Button
+                      size="small"
+                      color="secondary"
+                      onClick={() => {
+                        if (product.id) {
+                          deleteAvailableProduct(product.id, {
+                            onSuccess: invalidateAvailableProducts,
+                          });
+                        }
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            : null}
         </TableBody>
       </Table>
     </TableContainer>

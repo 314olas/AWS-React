@@ -4,6 +4,7 @@ import Link from "@mui/material/Link";
 import Container from "@mui/material/Container";
 import Header from "~/components/MainLayout/components/Header";
 import Box from "@mui/material/Box";
+import CredentialsModal from "../LoginForm/LoginForm";
 
 function Copyright() {
   return (
@@ -27,6 +28,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           {children}
         </Container>
       </main>
+
       <Box
         component={"footer"}
         sx={{ bgcolor: (theme) => theme.palette.background.paper, padding: 6 }}
@@ -41,6 +43,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         </Typography>
         <Copyright />
       </Box>
+      <CredentialsModal />
     </>
   );
 };
